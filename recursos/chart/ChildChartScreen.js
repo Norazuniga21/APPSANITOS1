@@ -299,6 +299,7 @@ class ChildChartScreen extends React.Component {
                 <HighchartsReactNative
                   styles={styles.container}
                   options={this.state.pesoChartOptions}
+                  useCDN={true}
                 />
                 {this.props.route.params.historicoPeso.length > 0 ? (
                   <Grid>
@@ -311,7 +312,7 @@ class ChildChartScreen extends React.Component {
                             width: 350,
                             textAlign: "center",
                             textAlignVertical: "center",
-                            padding:6,
+                            padding: 6,
                           }}
                         >
                           ¡Felicitaciones! Peso dentro del rango normal de
@@ -323,7 +324,7 @@ class ChildChartScreen extends React.Component {
                         <Text
                           style={{
                             fontSize: 14,
-                            padding:6,
+                            padding: 6,
                             color: "#FFF",
                             width: 350,
                             textAlign: "center",
@@ -358,6 +359,7 @@ class ChildChartScreen extends React.Component {
                 <HighchartsReactNative
                   styles={styles.container}
                   options={this.state.alturaChartOptions}
+                  useCDN={true}
                 />
                 {this.props.route.params.historicoEstatura.length > 0 ? (
                   <Grid>
@@ -366,7 +368,7 @@ class ChildChartScreen extends React.Component {
                         <Text
                           style={{
                             fontSize: 14,
-                            padding:6,
+                            padding: 6,
                             color: "#FFF",
                             width: 350,
                             textAlign: "center",
@@ -382,7 +384,7 @@ class ChildChartScreen extends React.Component {
                         <Text
                           style={{
                             fontSize: 14,
-                            padding:6,
+                            padding: 6,
                             color: "#FFF",
                             width: 350,
                             textAlign: "center",
