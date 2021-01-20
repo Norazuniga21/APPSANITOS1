@@ -39,11 +39,14 @@ const SignupScreen = ({ navigation }) => {
         await user.updateProfile({
           displayName: name,
         });
-
-        await saveTokenPhone(getPhoneToken(), user.uid);
+        if (user.uid) {
+          setTimeout(async () => {
+            await saveTokenPhone(getPhoneToken(), user.uid);
+          }, 3000);
+        } 
       } else {
         setShowAlertPassword(true);
-      }
+      }    
     } catch (error) {
       setErrorMessage(error.message);
     }

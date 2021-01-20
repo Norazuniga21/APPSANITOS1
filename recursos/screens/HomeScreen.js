@@ -382,7 +382,7 @@ const HomeScreen = ({ navigation }) => {
     <ScrollView style={styles.container}>
       <StatusBar barStyle="light-content" />
 
-      <Text style={styles.textWelcome}>Hola. Gracias por estar aquí.</Text>
+      <Text style={styles.textWelcome}> Hola, gracias por estar aquí.</Text>
       <View style={styles.containerCards}>
         <View>
           {childUsers.map((doc, index) => {

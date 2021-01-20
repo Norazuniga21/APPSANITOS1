@@ -27,10 +27,10 @@ const styles = StyleSheet.create({
 
   },
   vacunaAplicada: {
-    color: "green"
+    color: "#9b9b9b"
   },
   vacunaPendiente: {
-    color: "red"
+    color: "#9b9b9b"
   },
   infoCard: {
     marginBottom: 24,
