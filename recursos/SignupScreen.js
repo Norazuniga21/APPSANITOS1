@@ -32,7 +32,11 @@ const SignupScreen = ({ navigation }) => {
           displayName: name,
         });
 
-        await saveTokenPhone(getPhoneToken(), user.uid);
+        if (user.uid) {
+          setTimeout(async () => {
+            await saveTokenPhone(getPhoneToken(), user.uid);
+          }, 3000);
+        }
       } else {
         setShowAlertPassword(true);
       }
