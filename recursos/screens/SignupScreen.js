@@ -1,18 +1,15 @@
 import React, { useState } from "react";
 import { View, Text, StatusBar } from "react-native";
 import AwesomeAlert from "react-native-awesome-alerts";
-import {
-  TouchableOpacity,
-  TextInput,
-} from "react-native-gesture-handler";
-import SpinnerCustom from '../components/SpinnerCustom';
+import { TouchableOpacity, TextInput } from "react-native-gesture-handler";
+import SpinnerCustom from "../components/SpinnerCustom";
 import { firebase } from "../utils/firebase";
 import styles from "../styles/stylesSignupScreen";
 import { EvilIcons, AntDesign } from "@expo/vector-icons";
 import { saveTokenPhone } from "../hooks/firebase";
 import { getPhoneToken } from "../commons/user";
-import Constants from 'expo-constants';
-import * as Google from 'expo-google-app-auth';
+import Constants from "expo-constants";
+import * as Google from "expo-google-app-auth";
 import * as Facebook from "expo-facebook";
 import { androidClientId } from "../utils/const";
 
@@ -43,10 +40,10 @@ const SignupScreen = ({ navigation }) => {
           setTimeout(async () => {
             await saveTokenPhone(getPhoneToken(), user.uid);
           }, 3000);
-        } 
+        }
       } else {
         setShowAlertPassword(true);
-      }    
+      }
     } catch (error) {
       setErrorMessage(error.message);
     }
@@ -58,61 +55,71 @@ const SignupScreen = ({ navigation }) => {
         androidClientId,
         clientId: androidClientId,
         // iosClientId: YOUR_CLIENT_ID_HERE,
-        scopes: ['profile', 'email'],
+        scopes: ["profile", "email"],
       });
-      if (type === 'success') {
+      if (type === "success") {
         // return result.accessToken;
-        await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
-        const credential = firebase.auth.GoogleAuthProvider.credential(idToken, accessToken);
-        firebase.auth().signInWithCredential(credential)
-          .then(async user => { // All the details about user are in here returned from firebase
+        await firebase
+          .auth()
+          .setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+        const credential = firebase.auth.GoogleAuthProvider.credential(
+          idToken,
+          accessToken
+        );
+        firebase
+          .auth()
+          .signInWithCredential(credential)
+          .then(async (user) => {
+            // All the details about user are in here returned from firebase
             // console.log('Logged in successfully', user)
             await saveTokenPhone(getPhoneToken(), user.user.uid);
           })
           .catch((error) => {
-            setErrorMessage(error.message)
+            setErrorMessage(error.message);
           });
       } else {
-        throw new Error('El usuario canceló el proceso');
+        throw new Error("El usuario canceló el proceso");
       }
     } catch ({ message }) {
       setLoading(false);
       setErrorMessage(`Google Login: ${message}`);
       return { cancelled: true };
     }
-  }
+  };
 
   const Facebooklogin = async () => {
     try {
       setLoading(true);
-      await Facebook.initializeAsync(appId); // enter your Facebook App Id 
+      await Facebook.initializeAsync(appId); // enter your Facebook App Id
       const { type, token } = await Facebook.logInWithReadPermissionsAsync({
-        permissions: ['public_profile', 'email'],
+        permissions: ["public_profile", "email"],
       });
-      if (type === 'success') {
+      if (type === "success") {
         // SENDING THE TOKEN TO FIREBASE TO HANDLE AUTH
         const credential = firebase.auth.FacebookAuthProvider.credential(token);
-        firebase.auth().signInWithCredential(credential)
-          .then(async user => { // All the details about user are in here returned from firebase
+        firebase
+          .auth()
+          .signInWithCredential(credential)
+          .then(async (user) => {
+            // All the details about user are in here returned from firebase
             // console.log('Logged in successfully', user);
             await saveTokenPhone(getPhoneToken(), user.user.uid);
           })
           .catch((error) => {
-            setErrorMessage(error.message)
+            setErrorMessage(error.message);
           });
       } else {
-        throw new Error('El usuario canceló el proceso');
+        throw new Error("El usuario canceló el proceso");
       }
     } catch ({ message }) {
       setLoading(false);
       setErrorMessage(`Facebook Login: ${message}`);
     }
-  }
-
+  };
 
   return (
     <View style={styles.container}>
-      <SpinnerCustom visible={isLoading} ></SpinnerCustom>
+      <SpinnerCustom visible={isLoading}></SpinnerCustom>
       <StatusBar barStyle="light-content"></StatusBar>
       <Text style={styles.textTitle}>Regístrese</Text>
       <View style={styles.errorMessage}>
@@ -175,8 +182,10 @@ const SignupScreen = ({ navigation }) => {
       </View>
 
       <View style={styles.button3}>
-        <TouchableOpacity style={styles.buttonGo}
-          onPress={() => LoginWithGoogle()}>
+        <TouchableOpacity
+          style={styles.buttonGo}
+          onPress={() => LoginWithGoogle()}
+        >
           <AntDesign name="google" size={20} color="red" />
           <Text style={styles.textbutton1}>Regístrese con Google</Text>
         </TouchableOpacity>
